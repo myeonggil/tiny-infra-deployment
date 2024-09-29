@@ -21,12 +21,21 @@ terraform {
   }
 }
 
-module "service_deploy" {
+module "network" {
   source       = "./network"
   vpc_cidr     = var.vpc_cidr
   service_name = var.service_name
   region       = var.region
   public_your_ip = "${chomp(data.http.icanhazip.response_body)}/32"
+}
+
+module "compute" {
+  source = "./compute"
+  region = var.region
+  instance_type = var.instance_type
+  service_name = var.service_name
+  tiny_sg_id = module.network.tiny_sg_id
+  tiny_subnet_group_id = module.network.tiny_subnet_group_id
 }
 
 variable "service_name" {
