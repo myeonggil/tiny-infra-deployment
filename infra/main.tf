@@ -38,6 +38,12 @@ module "compute" {
   tiny_subnet_group_id = module.network.tiny_subnet_group_id
 }
 
+module "container" {
+  source = "./container"
+  tiny_sg_id = module.network.tiny_nginx_sg_id
+  tiny_subnet_groups_id = module.network.tiny_ecs_subnet_groups
+}
+
 variable "service_name" {
   description = "service name"
 }
