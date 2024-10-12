@@ -44,8 +44,19 @@ module "container" {
   tiny_subnet_groups_id = module.network.tiny_ecs_subnet_groups
 }
 
+module "dns" {
+  source = "./dns"
+  service_name = var.service_name
+  domain_name = var.domain_name
+  region = var.region
+}
+
 variable "service_name" {
   description = "service name"
+}
+
+variable "domain_name" {
+  description = "Already registered"
 }
 
 variable "region" {
