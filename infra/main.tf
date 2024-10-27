@@ -49,6 +49,17 @@ module "dns" {
   service_name = var.service_name
   domain_name = var.domain_name
   region = var.region
+  tiny_lb = module.lb.tiny_lb
+}
+
+module "lb" {
+  source = "./lb"
+  service_name = var.service_name
+  service_id = module.container.service_id
+  certification = module.dns.certification
+  tiny_tg_sg = module.network.tiny_sg_id
+  vpc_id = module.network.vpc_id
+  tiny_subnet_pub_ids = module.network.tiny_subnet_pub_ids
 }
 
 variable "service_name" {
