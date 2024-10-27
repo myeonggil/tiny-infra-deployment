@@ -36,3 +36,10 @@ resource "aws_vpc_security_group_ingress_rule" "allow_ssh" {
   from_port = 22
   ip_protocol = 22
 }
+
+resource "aws_vpc_security_group_ingress_rule" "allow_service_port" {
+  security_group_id = aws_security_group.tiny_access_connection.id
+  cidr_ipv4 = "0.0.0.0/0"
+  from_port = 8000
+  ip_protocol = 8000
+}
