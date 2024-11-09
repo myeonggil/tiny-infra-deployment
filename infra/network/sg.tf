@@ -43,3 +43,10 @@ resource "aws_vpc_security_group_ingress_rule" "allow_service_port" {
   from_port = 8000
   ip_protocol = 8000
 }
+
+resource "aws_vpc_security_group_ingress_rule" "allow_postgresql" {
+  security_group_id = aws_security_group.tiny_access_connection.id
+  cidr_ipv4 = "0.0.0.0/0"
+  from_port = 5432
+  ip_protocol = 5432
+}
