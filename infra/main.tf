@@ -5,6 +5,10 @@ provider "aws" {
   region                   = var.region
 }
 
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
 data "http" "icanhazip" {
   url = "http://icanhazip.com"
 }
@@ -16,10 +20,11 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "5.62.0"
+      version = "5.72.0"
     }
   }
 }
+
 
 module "network" {
   source       = "./network"
