@@ -16,3 +16,9 @@ output "tiny_ecs_subnet_groups" {
 output "tiny_subnet_pub_ids" {
   value = [ aws_subnet.tiny_public_1.id, aws_subnet.tiny_public_2.id ]
 }
+output "tiny_rds_sg_id" {
+  value = aws_vpc_security_group_ingress_rule.allow_postgresql.id
+}
+output "tiny_pub_sub_ids" {
+  value = [ aws_subnet.tiny_public_1.id, aws_subnet.tiny_public_2.id ]
+}

@@ -8,7 +8,6 @@ provider "aws" {
 data "aws_availability_zones" "available" {
   state = "available"
 }
-
 data "http" "icanhazip" {
   url = "http://icanhazip.com"
 }
@@ -25,7 +24,6 @@ terraform {
   }
 }
 
-
 module "network" {
   source       = "./network"
   vpc_cidr     = var.vpc_cidr
@@ -33,7 +31,6 @@ module "network" {
   region       = var.region
   public_your_ip = "${chomp(data.http.icanhazip.response_body)}/32"
 }
-
 module "compute" {
   source = "./compute"
   region = var.region
@@ -42,13 +39,11 @@ module "compute" {
   tiny_sg_id = module.network.tiny_sg_id
   tiny_subnet_group_id = module.network.tiny_subnet_group_id
 }
-
 module "container" {
   source = "./container"
   tiny_sg_id = module.network.tiny_nginx_sg_id
   tiny_subnet_groups_id = module.network.tiny_ecs_subnet_groups
 }
-
 module "dns" {
   source = "./dns"
   service_name = var.service_name
@@ -56,7 +51,6 @@ module "dns" {
   region = var.region
   tiny_lb = module.lb.tiny_lb
 }
-
 module "lb" {
   source = "./lb"
   service_name = var.service_name
@@ -66,24 +60,28 @@ module "lb" {
   vpc_id = module.network.vpc_id
   tiny_subnet_pub_ids = module.network.tiny_subnet_pub_ids
 }
+module "rds" {
+  source = "./rds"
+  tiny_sg_ids = module.network.tiny_rds_sg_id
+  tiny_pub_subnet_ids = module.network.tiny_pub_sub_ids
+  service_name = var.service_name
+  availability_zones = data.aws_availability_zones.available.names
+  region = var.region
+}
 
 variable "service_name" {
   description = "service name"
 }
-
 variable "domain_name" {
   description = "Already registered"
 }
-
 variable "region" {
   default     = "ap-northeast-2"
   description = "deploy region"
 }
-
 variable "instance_type" {
   description = "compute"
 }
-
 variable "vpc_cidr" {
   description = "vpc cidr"
 }
