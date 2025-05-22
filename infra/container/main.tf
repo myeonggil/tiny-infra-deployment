@@ -1,3 +1,55 @@
+
+# ECS Cluster
+resource "aws_ecs_cluster" "tiny_container_cluster" {
+  name = "tiny-container-cluster"
+
+  setting {
+    name = "containerInsights"
+    value = "enabled"
+  }
+}
+
+# Container Service
+resource "aws_ecs_service" "tiny_container_service" {
+  name = "tiny-container-service"
+  cluster = aws_ecs_cluster.tiny_container_cluster.id
+  task_definition = aws_ecs_task_definition.tiny_task_definition.arn
+  desired_count = 2
+  launch_type = "FARGATE"
+  force_new_deployment = true
+
+  network_configuration {
+    security_groups = [ var.tiny_sg_id ]
+    subnets = var.tiny_subnet_groups_id
+    assign_public_ip = false
+  }
+
+  # load_balancer {
+  #   target_group_arn = ""
+  #   container_name = ""
+  #   container_port = ""
+  # }
+
+  # depends_on = [ 
+
+  # ]
+
+  tags = {
+    Name = "tiny-containe-service"
+  }
+}
+
+# Container Repository
+resource "aws_ecr_repository" "tiny_container_image_repo" {
+  name = "tiny-container-image-repo"
+  image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+}
+
+# Container Task Definition
 data "aws_iam_policy_document" "ecs_task_execution_role" {
   version = "2012-10-17"
 

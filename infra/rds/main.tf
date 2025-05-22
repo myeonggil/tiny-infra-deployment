@@ -1,3 +1,26 @@
+# DB Engine
+data "aws_rds_engine_version" "tiny_pstgres_engine" {
+  engine = "aurora-postgresql"
+  version = "16.4"
+}
+
+# DB subnet, parameter group
+resource "aws_db_parameter_group" "tiny_db_pg" {
+  name = "tiny-db-param-group"
+  family = "postgres16"
+
+  parameter {
+    name  = "log_connections"
+    value = "1"
+  }
+}
+
+resource "aws_db_subnet_group" "tiny_db_sg" {
+  name = "tiny-db-pri-subnet-group"
+  subnet_ids = var.tiny_pub_subnet_ids
+}
+
+# RDS Instance
 
 resource "aws_rds_cluster" "tiny_postgres_cluster" {
   cluster_identifier = "tiny-postgres-cluster"
@@ -36,3 +59,4 @@ resource "aws_rds_cluster_instance" "tiny_postgres_cluster_instance" {
 #   publicly_accessible = true
 #   count = 2
 # }
+
