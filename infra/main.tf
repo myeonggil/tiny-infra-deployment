@@ -68,24 +68,7 @@ module "rds" {
   availability_zones = data.aws_availability_zones.available.names
   region = var.region
 }
-
-variable "service_name" {
-  description = "service name"
-}
-variable "domain_name" {
-  description = "Already registered"
-}
-variable "region" {
-  default     = "ap-northeast-2"
-  description = "deploy region"
-}
-variable "instance_type" {
-  description = "compute"
-}
-variable "vpc_cidr" {
-  description = "vpc cidr"
-}
-
-output "region" {
-  value = var.region
+module "iam" {
+  source = "./iam"
+  users = var.users
 }
