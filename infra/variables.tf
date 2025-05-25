@@ -14,8 +14,6 @@ variable "instance_type" {
 variable "vpc_cidr" {
   description = "vpc cidr"
 }
-
 variable "users" {
   type = list(string)
-  default = [ "mgju", "echosoul" ]
 }

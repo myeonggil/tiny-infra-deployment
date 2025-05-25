@@ -7,7 +7,7 @@ resource "aws_internet_gateway" "tiny_internetfacing" {
 }
 
 # NAT
-# resource "aws_eip" "public_ip" {}
+resource "aws_eip" "public_ip" {}
 
 resource "aws_nat_gateway" "tiny_private_connect" {
   allocation_id     = aws_eip.public_ip.id
