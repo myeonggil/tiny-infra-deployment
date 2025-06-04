@@ -3,3 +3,10 @@ resource_groups:
     location: "ap-northeast-2"
     tags:
       description: "this is a test resource groups"
+    vpc_cidr: "10.0.0.0/16"
+    service_name: "tiny"
+    domain_name: "symaon"
+    users:
+      - "backend-mgju"
+      - "frontend-echosoul"
+    instance_type: "t3.medium"

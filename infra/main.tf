@@ -2,7 +2,7 @@ provider "aws" {
   profile                  = "infra"
   shared_config_files      = ["~/.aws/config"]
   shared_credentials_files = ["~/.aws/credentials"]
-  region                   = var.region
+  region                   = local.yaml_rg["resource_groups"]["rg-01"]["location"]
 }
 
 data "aws_availability_zones" "available" {
