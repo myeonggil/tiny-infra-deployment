@@ -1,0 +1,5 @@
+resource_groups:
+  "rg-01":
+    location: "ap-northeast-2"
+    tags:
+      description: "this is a test resource groups"

@@ -22,3 +22,8 @@ module "remote" {
   service_name = "tiny"
 }
 ```
+
+## 운영 시나리오(DevOps 팀)
+1. 리소스를 생성해주세요(DB, EC2, Secret Manager,...)
+2. 사용자는 콘솔로 관리하자
+3. 리소스를 삭제해주세요

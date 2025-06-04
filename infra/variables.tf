@@ -1,3 +1,6 @@
+locals {
+  yaml_rg = yamldecode(file("${path.module}/config.yaml"))
+}
 variable "service_name" {
   description = "service name"
 }
